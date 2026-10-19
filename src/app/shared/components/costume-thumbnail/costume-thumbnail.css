@@ -1,0 +1,43 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.costume-thumbnail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+.costume-thumbnail[data-color='0'] {
+  background: linear-gradient(135deg, #4a2f63, #2a1f33);
+}
+
+.costume-thumbnail[data-color='1'] {
+  background: linear-gradient(135deg, #2f4a5c, #1f2a33);
+}
+
+.costume-thumbnail[data-color='2'] {
+  background: linear-gradient(135deg, #5c3f2f, #332821);
+}
+
+.costume-thumbnail[data-color='3'] {
+  background: linear-gradient(135deg, #3f5c3f, #212f22);
+}
+
+.costume-thumbnail[data-color='4'] {
+  background: linear-gradient(135deg, #5c2f4a, #331f29);
+}
+
+.costume-thumbnail[data-color='5'] {
+  background: linear-gradient(135deg, #3f4a5c, #212933);
+}

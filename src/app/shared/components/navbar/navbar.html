@@ -1,0 +1,30 @@
+<header class="navbar">
+  <div class="container navbar-inner">
+    <a class="brand" routerLink="/">
+      <span>Disfraces <strong>Express</strong></span>
+    </a>
+
+    <nav class="nav-links">
+      <a routerLink="/catalogo" routerLinkActive="active">Catálogo</a>
+      @if (auth.esCliente()) {
+        <a routerLink="/mi-cuenta" routerLinkActive="active">Mi Cuenta</a>
+      }
+      @if (auth.esAdmin()) {
+        <a routerLink="/admin" routerLinkActive="active">Panel Admin</a>
+      }
+    </nav>
+
+    <div class="navbar-actions">
+      @if (auth.estaAutenticado()) {
+        <span class="badge">{{ auth.esAdmin() ? 'ADMIN' : 'CLIENTE' }}</span>
+        <button class="avatar" type="button" [routerLink]="auth.esAdmin() ? '/admin' : '/mi-cuenta'">
+          {{ inicialUsuario() }}
+        </button>
+        <button class="btn btn-secondary btn-sm" type="button" (click)="cerrarSesion()">Salir</button>
+      } @else {
+        <a class="btn btn-secondary btn-sm" routerLink="/login">Iniciar sesión</a>
+        <a class="btn btn-primary btn-sm" routerLink="/registro">Registrarse</a>
+      }
+    </div>
+  </div>
+</header>

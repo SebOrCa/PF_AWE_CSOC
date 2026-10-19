@@ -1,0 +1,43 @@
+<section class="page container">
+  <h1>Catálogo de disfraces</h1>
+  <p class="text-muted">Encuentra el disfraz perfecto para tu próximo evento</p>
+
+  <div class="catalog-toolbar">
+    <input
+      type="text"
+      placeholder="Buscar disfraz..."
+      [ngModel]="busqueda()"
+      (ngModelChange)="busqueda.set($event)"
+    />
+
+    <div class="catalog-filtros">
+      <button class="chip" [class.active]="categoriaSeleccionada() === null" (click)="seleccionarCategoria(null)">
+        Todos
+      </button>
+      @for (categoria of catalogo.categorias(); track categoria.id) {
+        <button
+          class="chip"
+          [class.active]="categoriaSeleccionada() === categoria.id"
+          (click)="seleccionarCategoria(categoria.id)"
+        >
+          {{ categoria.nombre }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <p class="text-muted catalog-count">{{ disfracesFiltrados().length }} disfraces encontrados</p>
+
+  @if (disfracesFiltrados().length > 0) {
+    <div class="grid-disfraces">
+      @for (disfraz of disfracesFiltrados(); track disfraz.id) {
+        <app-disfraz-card
+          [disfraz]="disfraz"
+          [nombreCategoria]="catalogo.categoriaPorId(disfraz.categoriaId)?.nombre ?? ''"
+        />
+      }
+    </div>
+  } @else {
+    <div class="empty-state">No se encontraron disfraces con esos filtros.</div>
+  }
+</section>

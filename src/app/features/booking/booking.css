@@ -1,0 +1,90 @@
+.back-link {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  color: var(--text-muted);
+}
+
+.booking-layout {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  margin-top: 1.5rem;
+}
+
+.booking-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.booking-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+}
+
+.booking-item-thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.booking-item-thumb app-costume-thumbnail {
+  font-size: 1.1rem;
+}
+
+.booking-fechas,
+.booking-contacto {
+  padding: 1.25rem;
+}
+
+.duracion-chip {
+  margin: 0.5rem 0 0;
+  background: var(--bg-elevated);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.9rem;
+  display: inline-block;
+}
+
+.booking-resumen {
+  padding: 1.25rem;
+  position: sticky;
+  top: 90px;
+}
+
+.resumen-linea {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 0.6rem;
+}
+
+.resumen-total {
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+  margin-top: 0.5rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.resumen-nota {
+  font-size: 0.75rem;
+  text-align: center;
+  margin-top: 0.6rem;
+}
+
+.confirmacion {
+  margin-top: 1.5rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+@media (max-width: 860px) {
+  .booking-layout {
+    grid-template-columns: 1fr;
+  }
+}

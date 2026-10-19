@@ -1,0 +1,97 @@
+@if (disfraz(); as disfraz) {
+  <section class="page container">
+    <a class="back-link" [routerLink]="['/catalogo', disfraz.id]">← Volver al disfraz</a>
+    <h1>Apartar renta</h1>
+
+    @if (confirmado()) {
+      <div class="confirmacion card">
+        <h2>Apartado confirmado</h2>
+        <p class="text-muted">Redirigiendo a tu historial de rentas...</p>
+      </div>
+    } @else {
+      <div class="booking-layout">
+        <div class="booking-main">
+          <div class="booking-item card">
+            <div class="booking-item-thumb">
+              <app-costume-thumbnail [nombre]="disfraz.nombre" />
+            </div>
+            <div>
+              <h3>{{ disfraz.nombre }}</h3>
+              <p class="text-muted">Talla seleccionada: <strong>{{ talla() || disfraz.tallas[0] }}</strong></p>
+              <p class="text-accent">${{ disfraz.precioPorDia }}/día</p>
+            </div>
+          </div>
+
+          <div class="card booking-fechas">
+            <h3>Fechas de renta</h3>
+            <div class="form-row">
+              <div class="field">
+                <label for="inicio">Fecha de inicio</label>
+                <input
+                  id="inicio"
+                  type="date"
+                  [ngModel]="fechaInicio()"
+                  (ngModelChange)="fechaInicio.set($event)"
+                  name="inicio"
+                />
+              </div>
+              <div class="field">
+                <label for="devolucion">Fecha de devolución</label>
+                <input
+                  id="devolucion"
+                  type="date"
+                  [ngModel]="fechaDevolucion()"
+                  (ngModelChange)="fechaDevolucion.set($event)"
+                  name="devolucion"
+                />
+              </div>
+            </div>
+            <p class="duracion-chip">Duración: <strong>{{ duracionDias() }} días</strong></p>
+          </div>
+
+          <div class="card booking-contacto">
+            <h3>Datos de contacto</h3>
+            <div class="field">
+              <label>Nombre completo</label>
+              <input type="text" disabled [value]="(auth.usuarioActual()?.nombre ?? '') + ' ' + (auth.usuarioActual()?.apellidos ?? '')" />
+            </div>
+            <div class="field">
+              <label>Correo electrónico</label>
+              <input type="text" disabled [value]="auth.usuarioActual()?.correo" />
+            </div>
+          </div>
+        </div>
+
+        <aside class="booking-resumen card">
+          <h3>Resumen</h3>
+          <div class="resumen-linea">
+            <span>${{ disfraz.precioPorDia }} × {{ duracionDias() }} días</span>
+            <span>${{ subtotal() }}</span>
+          </div>
+          <div class="resumen-linea">
+            <span>Depósito reembolsable</span>
+            <span>${{ deposito() }}</span>
+          </div>
+          <div class="resumen-linea resumen-total">
+            <span>Total estimado</span>
+            <span class="text-accent">${{ total() }}</span>
+          </div>
+          <p class="text-muted resumen-nota">* El pago se realiza al momento de la entrega</p>
+
+          <button
+            class="btn btn-primary btn-block"
+            [disabled]="duracionDias() <= 0"
+            (click)="confirmarApartado()"
+          >
+            Confirmar apartado
+          </button>
+          <p class="text-muted resumen-nota">Sin cargo por cancelar con 48h de anticipación</p>
+        </aside>
+      </div>
+    }
+  </section>
+} @else {
+  <section class="page container">
+    <div class="empty-state">No se encontró el disfraz solicitado.</div>
+  </section>
+}

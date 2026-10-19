@@ -1,0 +1,40 @@
+<div class="tabla-wrap card">
+  <table class="tabla-admin">
+    <thead>
+      <tr>
+        <th>Disfraz</th>
+        <th>Talla</th>
+        <th>Fechas</th>
+        <th>Total</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (renta of rentaService.rentas(); track renta.id) {
+        <tr>
+          <td class="celda-disfraz">
+            <span class="mini-thumb">
+              <app-costume-thumbnail [nombre]="catalogo.disfrazPorId(renta.disfrazId)?.nombre ?? ''" />
+            </span>
+            {{ catalogo.disfrazPorId(renta.disfrazId)?.nombre }}
+          </td>
+          <td>{{ renta.talla }}</td>
+          <td class="text-muted">{{ renta.fechaInicio }} → {{ renta.fechaDevolucion }}</td>
+          <td class="text-accent">${{ renta.total }}</td>
+          <td><app-estado-badge [estado]="renta.estado" /></td>
+          <td class="celda-acciones">
+            @if (etiquetaAccion(renta)) {
+              <button class="btn btn-secondary btn-sm" type="button" (click)="avanzarEstado(renta)">
+                {{ etiquetaAccion(renta) }}
+              </button>
+            }
+            @if (puedeCancelar(renta)) {
+              <button class="btn btn-danger btn-sm" type="button" (click)="cancelar(renta)">Cancelar</button>
+            }
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

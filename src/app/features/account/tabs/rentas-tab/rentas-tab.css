@@ -1,0 +1,38 @@
+.rentas-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.renta-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+}
+
+.renta-thumb {
+  display: block;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.renta-thumb app-costume-thumbnail {
+  font-size: 0.9rem;
+}
+
+.renta-info {
+  flex: 1;
+}
+
+.renta-info h3 {
+  font-size: 1rem;
+  margin-bottom: 0.15rem;
+}
+
+.renta-total {
+  font-weight: 700;
+}

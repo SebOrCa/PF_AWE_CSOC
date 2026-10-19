@@ -1,0 +1,27 @@
+<a class="disfraz-card card" [routerLink]="['/catalogo', disfraz().id]">
+  <div class="disfraz-imagen">
+    <app-costume-thumbnail [nombre]="disfraz().nombre" />
+    @if (nombreCategoria()) {
+      <span class="badge badge-categoria">{{ nombreCategoria() }}</span>
+    }
+    @if (!disfraz().disponible) {
+      <span class="badge badge-no-disponible">No disponible</span>
+    }
+  </div>
+
+  <div class="disfraz-info">
+    <h3>{{ disfraz().nombre }}</h3>
+    <p class="disfraz-rating">
+      ★ {{ disfraz().calificacion }} <span class="text-muted">({{ disfraz().numeroResenas }})</span>
+    </p>
+    <p class="disfraz-precio">
+      <span class="text-accent">${{ disfraz().precioPorDia }}</span
+      ><span class="text-muted">/día</span>
+    </p>
+    <div class="disfraz-tallas">
+      @for (talla of disfraz().tallas; track talla) {
+        <span class="badge">{{ talla }}</span>
+      }
+    </div>
+  </div>
+</a>

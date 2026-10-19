@@ -1,0 +1,8 @@
+<div class="role-switcher">
+  <p>Demo · cambiar rol:</p>
+  <button type="button" [class.active]="!auth.estaAutenticado()" (click)="auth.salirAVisitante()">
+    Visitante
+  </button>
+  <button type="button" [class.active]="auth.esCliente()" (click)="auth.entrarComoCliente()">Cliente</button>
+  <button type="button" [class.active]="auth.esAdmin()" (click)="auth.entrarComoAdmin()">Admin</button>
+</div>

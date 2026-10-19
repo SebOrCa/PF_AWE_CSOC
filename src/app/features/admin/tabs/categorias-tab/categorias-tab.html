@@ -1,0 +1,65 @@
+<div class="tab-header">
+  <p class="text-muted">{{ catalogo.categorias().length }} categorías</p>
+  <button class="btn btn-primary btn-sm" type="button" (click)="abrirAgregar()">+ Agregar categoría</button>
+</div>
+
+@if (mostrarFormulario()) {
+  <form class="card form-categoria" (ngSubmit)="guardar()">
+    <h3>{{ tituloFormulario() }}</h3>
+
+    <div class="field">
+      <label for="nombre">Nombre</label>
+      <input
+        id="nombre"
+        type="text"
+        [ngModel]="formulario().nombre"
+        (ngModelChange)="actualizarCampo('nombre', $event)"
+        name="nombre"
+      />
+    </div>
+
+    <div class="field">
+      <label for="descripcion">Descripción</label>
+      <input
+        id="descripcion"
+        type="text"
+        [ngModel]="formulario().descripcion"
+        (ngModelChange)="actualizarCampo('descripcion', $event)"
+        name="descripcion"
+      />
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-secondary" type="button" (click)="cancelar()">Cancelar</button>
+      <button class="btn btn-primary" type="submit">Guardar</button>
+    </div>
+  </form>
+}
+
+<div class="tabla-wrap card">
+  <table class="tabla-admin">
+    <thead>
+      <tr>
+        <th>Categoría</th>
+        <th>Descripción</th>
+        <th>Disfraces</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (categoria of catalogo.categorias(); track categoria.id) {
+        <tr>
+          <td class="celda-disfraz">{{ categoria.nombre }}</td>
+          <td class="text-muted">{{ categoria.descripcion }}</td>
+          <td>{{ catalogo.disfracesPorCategoria(categoria.id).length }}</td>
+          <td class="celda-acciones">
+            <button class="btn btn-secondary btn-sm" type="button" (click)="abrirEditar(categoria)">
+              Editar
+            </button>
+            <button class="btn btn-danger btn-sm" type="button" (click)="eliminar(categoria)">Eliminar</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,47 @@
+<section class="page container">
+  <h1>Panel de administrador</h1>
+  <p class="text-muted">Gestión de catálogo y rentas — Disfraces Express</p>
+
+  <div class="admin-stats">
+    <div class="card stat-card">
+      <strong>{{ disfracesActivos() }}</strong>
+      <span class="text-muted">Disfraces activos</span>
+    </div>
+    <div class="card stat-card">
+      <strong>{{ totalCategorias() }}</strong>
+      <span class="text-muted">Categorías</span>
+    </div>
+    <div class="card stat-card">
+      <strong>{{ rentasEsteMes() }}</strong>
+      <span class="text-muted">Rentas este mes</span>
+    </div>
+    <div class="card stat-card">
+      <strong class="text-accent">${{ ingresosDelMes() }}</strong>
+      <span class="text-muted">Ingresos</span>
+    </div>
+  </div>
+
+  <div class="admin-tabs">
+    <button class="chip" [class.active]="tabActiva() === 'disfraces'" (click)="cambiarTab('disfraces')">
+      Disfraces
+    </button>
+    <button class="chip" [class.active]="tabActiva() === 'categorias'" (click)="cambiarTab('categorias')">
+      Categorías
+    </button>
+    <button class="chip" [class.active]="tabActiva() === 'rentas'" (click)="cambiarTab('rentas')">
+      Rentas
+    </button>
+  </div>
+
+  @switch (tabActiva()) {
+    @case ('disfraces') {
+      <app-disfraces-tab />
+    }
+    @case ('categorias') {
+      <app-categorias-tab />
+    }
+    @case ('rentas') {
+      <app-rentas-tab />
+    }
+  }
+</section>

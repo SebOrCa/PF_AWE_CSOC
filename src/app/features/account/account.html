@@ -1,0 +1,26 @@
+@if (auth.usuarioActual(); as usuario) {
+  <section class="page container">
+    <div class="account-header card">
+      <span class="account-avatar">{{ usuario.nombre.charAt(0) }}</span>
+      <div>
+        <h1>{{ usuario.nombre }} {{ usuario.apellidos }}</h1>
+        <p class="text-muted">{{ usuario.correo }} · Cliente desde {{ usuario.clienteDesde }}</p>
+      </div>
+    </div>
+
+    <div class="account-tabs">
+      <button class="chip" [class.active]="tabActiva() === 'perfil'" (click)="cambiarTab('perfil')">
+        Mi perfil
+      </button>
+      <button class="chip" [class.active]="tabActiva() === 'rentas'" (click)="cambiarTab('rentas')">
+        Mis rentas
+      </button>
+    </div>
+
+    @if (tabActiva() === 'perfil') {
+      <app-perfil-tab />
+    } @else {
+      <app-rentas-tab />
+    }
+  </section>
+}

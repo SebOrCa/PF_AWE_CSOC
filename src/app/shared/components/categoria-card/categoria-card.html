@@ -1,0 +1,5 @@
+<a class="categoria-card card" [routerLink]="['/catalogo']" [queryParams]="{ categoria: categoria().id }">
+  <span class="categoria-icono">{{ categoria().nombre.charAt(0) }}</span>
+  <h3>{{ categoria().nombre }}</h3>
+  <p class="text-muted">{{ cantidadDisfraces() }} disfraces</p>
+</a>

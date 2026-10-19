@@ -1,0 +1,21 @@
+@if (misRentas().length > 0) {
+  <div class="rentas-lista">
+    @for (renta of misRentas(); track renta.id) {
+      <div class="renta-item card">
+        <span class="renta-thumb">
+          <app-costume-thumbnail [nombre]="catalogo.disfrazPorId(renta.disfrazId)?.nombre ?? ''" />
+        </span>
+        <div class="renta-info">
+          <h3>{{ catalogo.disfrazPorId(renta.disfrazId)?.nombre }}</h3>
+          <p class="text-muted">
+            Talla {{ renta.talla }} · {{ renta.fechaInicio }} a {{ renta.fechaDevolucion }}
+          </p>
+        </div>
+        <span class="renta-total">${{ renta.total }}</span>
+        <app-estado-badge [estado]="renta.estado" />
+      </div>
+    }
+  </div>
+} @else {
+  <div class="empty-state">Todavía no tienes rentas. ¡Explora el catálogo!</div>
+}

@@ -1,0 +1,95 @@
+<section class="auth-page">
+  <div class="auth-visual">
+    <blockquote>"El disfraz perfecto para cada historia"</blockquote>
+  </div>
+
+  <div class="auth-form-wrap">
+    <div class="auth-form card">
+      <h1>Crea tu cuenta</h1>
+      <p class="text-muted">Regístrate gratis y aparta disfraces en línea</p>
+
+      <form (ngSubmit)="crearCuenta()">
+        <div class="form-row">
+          <div class="field">
+            <label for="nombre">Nombre(s)</label>
+            <input
+              id="nombre"
+              type="text"
+              [ngModel]="nombre()"
+              (ngModelChange)="nombre.set($event)"
+              name="nombre"
+            />
+          </div>
+          <div class="field">
+            <label for="apellidos">Apellidos</label>
+            <input
+              id="apellidos"
+              type="text"
+              [ngModel]="apellidos()"
+              (ngModelChange)="apellidos.set($event)"
+              name="apellidos"
+            />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="correo">Correo electrónico</label>
+          <input
+            id="correo"
+            type="email"
+            placeholder="correo@ejemplo.com"
+            [ngModel]="correo()"
+            (ngModelChange)="correo.set($event)"
+            name="correo"
+          />
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="contrasena">Contraseña</label>
+            <input
+              id="contrasena"
+              type="password"
+              [ngModel]="contrasena()"
+              (ngModelChange)="contrasena.set($event)"
+              name="contrasena"
+            />
+          </div>
+          <div class="field">
+            <label for="confirmar">Confirmar contraseña</label>
+            <input
+              id="confirmar"
+              type="password"
+              [ngModel]="confirmarContrasena()"
+              (ngModelChange)="confirmarContrasena.set($event)"
+              name="confirmar"
+            />
+            @if (!contrasenasCoinciden()) {
+              <span class="field-error">Las contraseñas no coinciden</span>
+            }
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="telefono">Teléfono</label>
+          <input
+            id="telefono"
+            type="tel"
+            placeholder="55 1234 5678"
+            [ngModel]="telefono()"
+            (ngModelChange)="telefono.set($event)"
+            name="telefono"
+          />
+        </div>
+
+        @if (error()) {
+          <p class="field-error">{{ error() }}</p>
+        }
+
+        <button class="btn btn-primary btn-block" type="submit">Crear cuenta</button>
+      </form>
+
+      <p class="auth-switch">¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a></p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,40 @@
+.estado-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  text-transform: capitalize;
+}
+
+.estado-badge[data-estado='pendiente'] {
+  background: rgba(255, 184, 76, 0.12);
+  color: #ffb84c;
+  border-color: rgba(255, 184, 76, 0.3);
+}
+
+.estado-badge[data-estado='confirmada'] {
+  background: rgba(77, 158, 255, 0.12);
+  color: #4d9eff;
+  border-color: rgba(77, 158, 255, 0.3);
+}
+
+.estado-badge[data-estado='entregada'] {
+  background: rgba(255, 138, 61, 0.12);
+  color: var(--accent);
+  border-color: rgba(255, 138, 61, 0.3);
+}
+
+.estado-badge[data-estado='devuelta'] {
+  background: rgba(62, 207, 126, 0.12);
+  color: var(--success);
+  border-color: rgba(62, 207, 126, 0.3);
+}
+
+.estado-badge[data-estado='cancelada'] {
+  background: rgba(239, 90, 90, 0.12);
+  color: var(--danger);
+  border-color: rgba(239, 90, 90, 0.3);
+}

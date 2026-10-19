@@ -1,0 +1,49 @@
+.role-switcher {
+  position: fixed;
+  top: 76px;
+  right: 1rem;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.6rem;
+  box-shadow: var(--shadow);
+  width: 140px;
+}
+
+.role-switcher p {
+  margin: 0 0 0.2rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.role-switcher button {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.8rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.role-switcher button.active {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+@media (max-width: 720px) {
+  .role-switcher {
+    top: auto;
+    bottom: 1rem;
+    right: 1rem;
+  }
+}

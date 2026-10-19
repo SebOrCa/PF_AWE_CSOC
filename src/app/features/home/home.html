@@ -1,0 +1,70 @@
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <span class="badge badge-temporada">Temporada Halloween 2026</span>
+      <h1>El disfraz perfecto para <span class="text-accent">cada ocasión</span></h1>
+      <p class="text-muted">
+        Renta disfraces de alta calidad para Halloween, fiestas temáticas, obras de teatro y eventos
+        especiales. Consulta disponibilidad y aparta en línea.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" routerLink="/catalogo">Ver catálogo</a>
+        <a class="btn btn-secondary" routerLink="/registro">Crear cuenta gratis</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <strong>+500</strong>
+          <span class="text-muted">Disfraces</span>
+        </div>
+        <div>
+          <strong>4.9★</strong>
+          <span class="text-muted">Calificación</span>
+        </div>
+        <div>
+          <strong>3 días</strong>
+          <span class="text-muted">Entrega rápida</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-gallery">
+      @for (disfraz of catalogo.disfracesDestacados(); track disfraz.id) {
+        <div class="hero-gallery-item">
+          <div class="hero-gallery-thumb">
+            <app-costume-thumbnail [nombre]="disfraz.nombre" />
+          </div>
+          <p>{{ disfraz.nombre }}<br /><span class="text-accent">${{ disfraz.precioPorDia }}/día</span></p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="page container">
+  <div class="section-title">
+    <h2>Categorías populares</h2>
+  </div>
+  <div class="grid-categorias">
+    @for (categoria of catalogo.categorias(); track categoria.id) {
+      <app-categoria-card
+        [categoria]="categoria"
+        [cantidadDisfraces]="catalogo.disfracesPorCategoria(categoria.id).length"
+      />
+    }
+  </div>
+</section>
+
+<section class="page container">
+  <div class="section-title">
+    <h2>Disfraces destacados</h2>
+    <a routerLink="/catalogo">Ver todos</a>
+  </div>
+  <div class="grid-disfraces">
+    @for (disfraz of catalogo.disfracesDestacados(); track disfraz.id) {
+      <app-disfraz-card
+        [disfraz]="disfraz"
+        [nombreCategoria]="catalogo.categoriaPorId(disfraz.categoriaId)?.nombre ?? ''"
+      />
+    }
+  </div>
+</section>

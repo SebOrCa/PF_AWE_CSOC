@@ -1,0 +1,56 @@
+@if (disfraz(); as disfraz) {
+  <section class="page container">
+    <a class="back-link" routerLink="/catalogo">← Volver al catálogo</a>
+
+    <div class="detail-layout">
+      <div class="detail-media card">
+        <app-costume-thumbnail [nombre]="disfraz.nombre" />
+      </div>
+
+      <div class="detail-info">
+        @if (categoria()) {
+          <span class="badge badge-categoria">{{ categoria()!.nombre }}</span>
+        }
+        <h1>{{ disfraz.nombre }}</h1>
+        <p class="detail-rating">★ {{ disfraz.calificacion }} · {{ disfraz.numeroResenas }} reseñas</p>
+        <p class="text-muted">{{ disfraz.descripcion }}</p>
+
+        <div class="detail-price card">
+          <p class="price-amount"><span class="text-accent">${{ disfraz.precioPorDia }}</span> por día de renta</p>
+          <p class="text-muted">+ depósito reembolsable de ${{ disfraz.deposito }}</p>
+        </div>
+
+        <h3>Selecciona tu talla</h3>
+        <div class="detail-tallas">
+          @for (talla of disfraz.tallas; track talla) {
+            <button
+              class="talla-btn"
+              [class.selected]="tallaSeleccionada() === talla"
+              (click)="seleccionarTalla(talla)"
+            >
+              {{ talla }}
+            </button>
+          }
+        </div>
+
+        <p class="disponibilidad" [class.no-disponible]="!disfraz.disponible">
+          ● {{ disfraz.disponible ? 'Disponible para renta' : 'No disponible actualmente' }}
+        </p>
+
+        @if (auth.estaAutenticado()) {
+          <button class="btn btn-primary btn-block" [disabled]="!disfraz.disponible" (click)="irAApartar()">
+            Apartar este disfraz
+          </button>
+        } @else {
+          <button class="btn btn-primary btn-block" [disabled]="!disfraz.disponible" (click)="irAApartar()">
+            Inicia sesión o regístrate para apartar este disfraz
+          </button>
+        }
+      </div>
+    </div>
+  </section>
+} @else {
+  <section class="page container">
+    <div class="empty-state">No se encontró el disfraz solicitado.</div>
+  </section>
+}

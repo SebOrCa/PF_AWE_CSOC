@@ -1,0 +1,143 @@
+<div class="tab-header">
+  <p class="text-muted">{{ catalogo.disfraces().length }} disfraces en catálogo</p>
+  <button class="btn btn-primary btn-sm" type="button" (click)="abrirAgregar()">+ Agregar disfraz</button>
+</div>
+
+@if (mostrarFormulario()) {
+  <form class="card form-disfraz" (ngSubmit)="guardar()">
+    <h3>{{ tituloFormulario() }}</h3>
+
+    <div class="form-row">
+      <div class="field">
+        <label for="nombre">Nombre</label>
+        <input
+          id="nombre"
+          type="text"
+          [ngModel]="formulario().nombre"
+          (ngModelChange)="actualizarCampo('nombre', $event)"
+          name="nombre"
+        />
+      </div>
+      <div class="field">
+        <label for="categoria">Categoría</label>
+        <select
+          id="categoria"
+          [ngModel]="formulario().categoriaId"
+          (ngModelChange)="actualizarCampo('categoriaId', $event)"
+          name="categoria"
+        >
+          @for (categoria of catalogo.categorias(); track categoria.id) {
+            <option [value]="categoria.id">{{ categoria.nombre }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="descripcion">Descripción</label>
+      <textarea
+        id="descripcion"
+        rows="2"
+        [ngModel]="formulario().descripcion"
+        (ngModelChange)="actualizarCampo('descripcion', $event)"
+        name="descripcion"
+      ></textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="field">
+        <label for="tallas">Tallas (separadas por coma)</label>
+        <input
+          id="tallas"
+          type="text"
+          placeholder="S, M, L, XL"
+          [ngModel]="formulario().tallas"
+          (ngModelChange)="actualizarCampo('tallas', $event)"
+          name="tallas"
+        />
+      </div>
+      <div class="field">
+        <label for="precio">Precio por día</label>
+        <input
+          id="precio"
+          type="number"
+          min="0"
+          [ngModel]="formulario().precioPorDia"
+          (ngModelChange)="actualizarCampo('precioPorDia', $event)"
+          name="precio"
+        />
+      </div>
+      <div class="field">
+        <label for="deposito">Depósito</label>
+        <input
+          id="deposito"
+          type="number"
+          min="0"
+          [ngModel]="formulario().deposito"
+          (ngModelChange)="actualizarCampo('deposito', $event)"
+          name="deposito"
+        />
+      </div>
+    </div>
+
+    <label class="checkbox-field">
+      <input
+        type="checkbox"
+        [ngModel]="formulario().disponible"
+        (ngModelChange)="actualizarCampo('disponible', $event)"
+        name="disponible"
+      />
+      Disponible para renta
+    </label>
+
+    <div class="form-actions">
+      <button class="btn btn-secondary" type="button" (click)="cancelar()">Cancelar</button>
+      <button class="btn btn-primary" type="submit">Guardar</button>
+    </div>
+  </form>
+}
+
+<div class="tabla-wrap card">
+  <table class="tabla-admin">
+    <thead>
+      <tr>
+        <th>Disfraz</th>
+        <th>Categoría</th>
+        <th>Precio/día</th>
+        <th>Tallas</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (disfraz of catalogo.disfraces(); track disfraz.id) {
+        <tr>
+          <td class="celda-disfraz">
+            <span class="mini-thumb"><app-costume-thumbnail [nombre]="disfraz.nombre" /></span>
+            {{ disfraz.nombre }}
+          </td>
+          <td>{{ catalogo.categoriaPorId(disfraz.categoriaId)?.nombre }}</td>
+          <td class="text-accent">${{ disfraz.precioPorDia }}</td>
+          <td>
+            @for (talla of disfraz.tallas; track talla) {
+              <span class="badge">{{ talla }}</span>
+            }
+          </td>
+          <td>
+            <span class="badge" [class.badge-disponible]="disfraz.disponible">
+              {{ disfraz.disponible ? 'Disponible' : 'No disponible' }}
+            </span>
+          </td>
+          <td class="celda-acciones">
+            <button class="btn btn-secondary btn-sm" type="button" (click)="abrirEditar(disfraz)">
+              Editar
+            </button>
+            <button class="btn btn-danger btn-sm" type="button" (click)="alternarDisponibilidad(disfraz)">
+              {{ disfraz.disponible ? 'Dar de baja' : 'Dar de alta' }}
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,76 @@
+<div class="perfil-grid">
+  <form class="card perfil-card" (ngSubmit)="guardarCambios()">
+    <h3>Información personal</h3>
+
+    <div class="field">
+      <label for="nombre">Nombre(s)</label>
+      <input id="nombre" type="text" [ngModel]="nombre()" (ngModelChange)="nombre.set($event)" name="nombre" />
+    </div>
+    <div class="field">
+      <label for="apellidos">Apellidos</label>
+      <input
+        id="apellidos"
+        type="text"
+        [ngModel]="apellidos()"
+        (ngModelChange)="apellidos.set($event)"
+        name="apellidos"
+      />
+    </div>
+    <div class="field">
+      <label for="correo">Correo electrónico</label>
+      <input id="correo" type="email" [ngModel]="correo()" (ngModelChange)="correo.set($event)" name="correo" />
+    </div>
+    <div class="field">
+      <label for="telefono">Teléfono</label>
+      <input
+        id="telefono"
+        type="tel"
+        [ngModel]="telefono()"
+        (ngModelChange)="telefono.set($event)"
+        name="telefono"
+      />
+    </div>
+
+    <button class="btn btn-primary" type="submit">Guardar cambios</button>
+    @if (guardado()) {
+      <p class="text-accent guardado-msg">✓ Cambios guardados</p>
+    }
+  </form>
+
+  <form class="card perfil-card" (ngSubmit)="actualizarContrasena()">
+    <h3>Cambiar contraseña</h3>
+
+    <div class="field">
+      <label for="actual">Contraseña actual</label>
+      <input
+        id="actual"
+        type="password"
+        [ngModel]="contrasenaActual()"
+        (ngModelChange)="contrasenaActual.set($event)"
+        name="actual"
+      />
+    </div>
+    <div class="field">
+      <label for="nueva">Nueva contraseña</label>
+      <input
+        id="nueva"
+        type="password"
+        [ngModel]="contrasenaNueva()"
+        (ngModelChange)="contrasenaNueva.set($event)"
+        name="nueva"
+      />
+    </div>
+    <div class="field">
+      <label for="confirmar">Confirmar contraseña</label>
+      <input
+        id="confirmar"
+        type="password"
+        [ngModel]="contrasenaConfirmar()"
+        (ngModelChange)="contrasenaConfirmar.set($event)"
+        name="confirmar"
+      />
+    </div>
+
+    <button class="btn btn-secondary" type="submit">Actualizar contraseña</button>
+  </form>
+</div>
