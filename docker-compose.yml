@@ -1,0 +1,76 @@
+# Disfraces Express - frontend (Angular + nginx), backend (Node/Express) y MongoDB.
+#
+# Uso:
+#   docker compose up --build -d      # construir y levantar todo
+#   docker compose logs -f backend    # ver logs de un servicio
+#   docker compose down               # detener (conserva los datos de Mongo)
+#   docker compose down -v            # detener y BORRAR los datos de Mongo
+#
+# Las variables se leen de un archivo .env junto a este compose (ver .env.example).
+# Si no existe, se usan los valores por defecto de abajo (solo para desarrollo).
+
+services:
+  mongo:
+    image: mongo:8
+    container_name: disfraces-mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-admin123}
+      MONGO_INITDB_DATABASE: ${MONGO_DB:-disfraces_express}
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      # Solo accesible desde tu maquina (p. ej. MongoDB Compass), no desde la red.
+      # Si el 27017 esta ocupado por otro Mongo, define MONGO_PORT=27018 en el .env.
+      - "127.0.0.1:${MONGO_PORT:-27017}:27017"
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    networks:
+      - disfraces-net
+
+  backend:
+    build:
+      context: ./backend
+    container_name: disfraces-backend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      # Dentro de la red de Docker el host de la BD es el nombre del servicio: "mongo".
+      # Si la contrasena tiene caracteres especiales (@ : / ?) hay que codificarla en URL.
+      DB_URI: mongodb://${MONGO_ROOT_USER:-admin}:${MONGO_ROOT_PASSWORD:-admin123}@mongo:27017
+      DB_NAME: ${MONGO_DB:-disfraces_express}
+      JWT_SECRET: ${JWT_SECRET:-cambia-este-secreto-en-produccion}
+    depends_on:
+      mongo:
+        condition: service_healthy
+    ports:
+      # Publicado para probar la API directamente (Postman, curl). El frontend
+      # no lo necesita: nginx reenvia /api al backend por la red interna.
+      - "${BACKEND_PORT:-3000}:3000"
+    networks:
+      - disfraces-net
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: disfraces-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "${FRONTEND_PORT:-4200}:80"
+    networks:
+      - disfraces-net
+
+volumes:
+  mongo_data:
+
+networks:
+  disfraces-net:
+    driver: bridge
