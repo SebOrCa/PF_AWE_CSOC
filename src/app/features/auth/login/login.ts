@@ -17,29 +17,29 @@ export class Login {
   readonly correo = signal('');
   readonly contrasena = signal('');
   readonly error = signal('');
+  readonly cargando = signal(false);
 
-  iniciarSesion(): void {
+  async iniciarSesion(): Promise<void> {
     if (!this.correo() || !this.contrasena()) {
       this.error.set('Ingresa tu correo y contraseña.');
       return;
     }
+
     this.error.set('');
-    this.auth.login(this.correo(), this.contrasena());
-    this.redirigirDespuesDeLogin();
-  }
+    this.cargando.set(true);
 
-  entrarComoCliente(): void {
-    this.auth.entrarComoCliente();
-    this.redirigirDespuesDeLogin();
-  }
-
-  entrarComoAdmin(): void {
-    this.auth.entrarComoAdmin();
-    this.router.navigate(['/admin']);
+    try {
+      await this.auth.login(this.correo(), this.contrasena());
+      this.redirigirDespuesDeLogin();
+    } catch (error) {
+      this.error.set((error as Error).message);
+    } finally {
+      this.cargando.set(false);
+    }
   }
 
   private redirigirDespuesDeLogin(): void {
     const redirectTo = this.route.snapshot.queryParamMap.get('redirectTo');
-    this.router.navigateByUrl(redirectTo ?? '/mi-cuenta');
+    this.router.navigateByUrl(redirectTo ?? (this.auth.esAdmin() ? '/admin' : '/mi-cuenta'));
   }
 }

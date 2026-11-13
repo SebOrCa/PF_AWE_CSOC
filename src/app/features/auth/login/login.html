@@ -39,22 +39,12 @@
 
         <a class="forgot-link" href="javascript:void(0)">¿Olvidaste tu contraseña?</a>
 
-        <button class="btn btn-primary btn-block" type="submit">Iniciar sesión</button>
+        <button class="btn btn-primary btn-block" type="submit" [disabled]="cargando()">
+          {{ cargando() ? 'Ingresando...' : 'Iniciar sesión' }}
+        </button>
       </form>
 
       <p class="auth-switch">¿No tienes cuenta? <a routerLink="/registro">Regístrate gratis</a></p>
-
-      <div class="demo-access">
-        <p class="text-muted">Acceso de demostración</p>
-        <div class="demo-buttons">
-          <button class="btn btn-secondary btn-sm" type="button" (click)="entrarComoCliente()">
-            Entrar como cliente
-          </button>
-          <button class="btn btn-secondary btn-sm" type="button" (click)="entrarComoAdmin()">
-            Entrar como admin
-          </button>
-        </div>
-      </div>
     </div>
   </div>
 </section>

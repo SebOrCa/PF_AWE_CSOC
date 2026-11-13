@@ -86,7 +86,9 @@
           <p class="field-error">{{ error() }}</p>
         }
 
-        <button class="btn btn-primary btn-block" type="submit">Crear cuenta</button>
+        <button class="btn btn-primary btn-block" type="submit" [disabled]="cargando()">
+          {{ cargando() ? 'Creando cuenta...' : 'Crear cuenta' }}
+        </button>
       </form>
 
       <p class="auth-switch">¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a></p>

@@ -31,6 +31,10 @@
       />
     </div>
 
+    @if (errorPerfil()) {
+      <p class="field-error">{{ errorPerfil() }}</p>
+    }
+
     <button class="btn btn-primary" type="submit">Guardar cambios</button>
     @if (guardado()) {
       <p class="text-accent guardado-msg">✓ Cambios guardados</p>
@@ -71,6 +75,13 @@
       />
     </div>
 
+    @if (errorContrasena()) {
+      <p class="field-error">{{ errorContrasena() }}</p>
+    }
+
     <button class="btn btn-secondary" type="submit">Actualizar contraseña</button>
+    @if (contrasenaActualizada()) {
+      <p class="text-accent guardado-msg">✓ Contraseña actualizada</p>
+    }
   </form>
 </div>
